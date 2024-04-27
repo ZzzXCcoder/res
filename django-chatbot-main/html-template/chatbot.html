@@ -88,6 +88,9 @@
     <br><br>
     <br><br>
     <br><br>
+    {%and not user_story.history %}  <!-- Проверяем, нет ли чатов и нет ли истории пользователя -->
+    <H1>Напишите историю своего персонажа его положительные и отрицательные стороны</H1>
+    {% endif %}
   </div>
   <form class="message-form">
     {%csrf_token%}
@@ -99,6 +102,6 @@
     </div>
   </form>
 </div>
-
+<img src="{{ image_url }}" alt="Generated Image">
 
 {% endblock %}
