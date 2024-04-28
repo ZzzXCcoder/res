@@ -10,7 +10,7 @@ from django.utils import timezone
 
 user_story = UserStory()
 client = OpenAI(
-    api_key="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"
+    api_key=""
 )
 
 chat_response_0 = ''
