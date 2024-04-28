@@ -3,12 +3,18 @@
 {% block styles %}
 <style>
     body, html {
-      height: 100%;
-    }
-
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #2c2c2c;
+    color: #ffffff;
+    font-family: 'Roboto', sans-serif;
+}
     .messages-box {
       flex: 1;
-      overflow-y: auto;
+      overflow-y: auto; /* Добавляем возможность вертикальной прокрутки */
+      padding: 15px; /* Добавляем немного отступа для прокрутки */
     }
 
     .messages-list {
@@ -26,12 +32,12 @@
     }
 
     .sent {
-      background-color: #dcf8c6;
+      background-color: #3b9c9c; /* Цвет отправленного сообщения */
       align-self: flex-end;
     }
 
     .received {
-      background-color: #f1f0f0;
+      background-color: #523737; /* Цвет полученного сообщения */
       align-self: flex-start;
     }
 
@@ -42,37 +48,65 @@
       left: 0;
       right: 0;
       padding: 10px;
-      background-color: #f8f9fa;
+      background-color: #3b3b3b; /* Цвет формы сообщения */
     }
 
     .message-input {
       flex: 1;
       border-radius: 0;
       border-right: none;
+      background-color: #2c2c2c; /* Цвет поля ввода */
+      color: #ffffff; /* Цвет текста в поле ввода */
     }
 
     .btn-send {
       border-radius: 0;
+      background-color: #3b9c9c; /* Цвет кнопки отправки */
+      border: none;
+      color: #ffffff; /* Цвет текста на кнопке */
     }
 
     .chat-container {
       height: 100%;
       display: flex;
+      background-color: #2c2c2c; /* Цвет поля ввода */
       flex-direction: column;
     }
-  </style>
+
+    .card-header {
+  background-color: #361b03 !important; /* Используем !important, чтобы переопределить другие стили */
+  color: #ffd700 !important;
+  font-family: 'Grenze', serif !important;
+  font-size: 24px !important;
+  padding: 10px 20px !important;
+  border-bottom: 2px solid #ffd700 !important;
+}
+
+    .card-body {
+      background-color: #3b3b3b; /* Цвет тела карточки */
+    }
+
+    /* Дополнительные стили для оформления */
+    .card {
+      border: none;
+      border-radius: 10px;
+    }
+</style>
 {% endblock %}
 
 
 {% block content %}
 <div class="chat-container">
   <div class="card flex-grow-1">
-    <div class="card-header bg-primary text-white">Chat</div>
+    <div class="card-header bg-primary text-white">Диалоговое окно</div>
     {% if user.is_authenticated %}
-    <div class="card-header bg-primary text-white"><b>Welcome, {{user.username}}</b>   <a style="color: yellow;" href="logout">Logout</a></div>
-    {% else %}
-    <div class="card-header bg-primary text-white"><a style="color: yellow" href="login">Login</a>   <a style="color: yellow;" href="register">Register</a></div>
-    {% endif %}
+  <div class="card-header bg-primary text-white" style="display: flex; justify-content: space-between;">
+    <b>Приветствую, {{user.username}}</b>
+    <a style="color: yellow;" href="logout">Выйти</a>
+  </div>
+  {% else %}
+  <div class="card-header bg-primary text-white"><a style="color: yellow" href="login">Login</a>   <a style="color: yellow;" href="register">Register</a></div>
+  {% endif %}
     <div class="card-body messages-box">
       
       <ul class="list-unstyled messages-list">
@@ -119,16 +153,13 @@
       </ul>
       
     </div>
-    <br><br>
-    <br><br>
-    <br><br>
   </div>
   <form class="message-form">
     {%csrf_token%}
     <div class="input-group">
-      <input type="text" class="form-control message-input" placeholder="Type your message...">
+      <input type="text" class="form-control message-input" placeholder="Накорябать на бересте">
       <div class="input-group-append">
-        <button type="submit" class="btn btn-primary btn-send">Send</button>
+        <button type="submit" class="btn btn-primary btn-send">Смолвить</button>
       </div>
     </div>
   </form>
@@ -152,7 +183,7 @@
     messageItem.innerHTML = `
         <div class="message-text">
             <div class="message-sender">
-                <b>You</b>
+                <b>Вы</b>
             </div>
             <div class="message-content">
                 ${message}
@@ -178,7 +209,7 @@
         messageItem.innerHTML = `
         <div class="message-text">
             <div class="message-sender">
-              <b>AI Chatbot</b>
+              <b>Гейм Мастер Вэн</b>
             </div>
             <div class="message-content">
                 ${response}

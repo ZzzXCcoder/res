@@ -10,27 +10,30 @@ from django.utils import timezone
 
 user_story = UserStory()
 client = OpenAI(
-    api_key="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"
+    api_key="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"
 )
 
-chat_completion_0 = client.chat.completions.create(
-    messages = [
-        {
-            "role": "system", 
-            "content" : "Ты мой Гейм Мастер в настольной ролевой игре под названием DnD. Ты должен предлагать мне варианты возможных действий в разных игровых ситуациях. При этом веди повествование как старый рассказчик из книг.",
-        },
-        {
-            "role": "user",
-            "content": f'Меня зовут Толик я жоский воин когда бью своих врагов кричу ныа !',
-        }
-    ],
-    model="gpt-3.5-turbo",
+chat_response_0 = ''
 
-)
+def userstory(user, story):
+    chat_completion_0 = client.chat.completions.create(
+        messages = [
+            {
+                "role": "system", 
+                "content" : "Ты мой Гейм Мастер в настольной ролевой игре под названием DnD. Ты должен предлагать мне варианты возможных действий в разных игровых ситуациях. При этом веди повествование как старый рассказчик из книг.",
+            },
+            {
+                "role": "user",
+                "content": f'Меня зовут {user}, вот моя предыстория: {story}',
+            }
+        ],
+        model="gpt-3.5-turbo"
+    )
+    global chat_response_0
+    chat_response_0 = chat_completion_0.choices[0].message.content
 
-print(chat_completion_0)
+    return(chat_response_0)
 
-chat_response_0 = chat_completion_0.choices[0].message.content
 
 
 def ask_openai(message):
@@ -103,7 +106,7 @@ def register(request):
         email = request.POST['email']
         password1 = request.POST['password1']
         password2 = request.POST['password2']
-
+        userstory(username, email)
         if password1 == password2:
             try:
                 user = User.objects.create_user(username, email, password1)
